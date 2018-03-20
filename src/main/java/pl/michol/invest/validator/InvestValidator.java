@@ -35,7 +35,7 @@ public class InvestValidator {
     }
 
     public void validateRequest(InvestRequestModel investRequestModel, FundRepository fundRepository, InvestStyleRepository investStyleRepository) {
-        List<Fund> selectedFunds = investRequestModel.getFundIds().stream().map(fundRepository::findOne).collect(Collectors.toList());
+        List<Fund> selectedFunds = investRequestModel.getFundIds().stream().map(fundRepository::findOne).filter(fund -> fund != null).collect(Collectors.toList());
         validateSelectedFunds(selectedFunds);
         InvestStyle investStyle = investStyleRepository.findByName(investRequestModel.getInvestStyle());
         validateInvestStyle(investStyle);

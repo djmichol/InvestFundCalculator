@@ -27,7 +27,7 @@ public class InvestHandler implements Handler<InvestRequestModel, InvestResponse
 
     @Override
     public InvestResponseModel handle(InvestRequestModel investRequestModel) {
-        List<Fund> selectedFunds = investRequestModel.getFundIds().stream().map(fundRepository::findOne).collect(Collectors.toList());
+        List<Fund> selectedFunds = investRequestModel.getFundIds().stream().map(fundRepository::findOne).filter(fund -> fund != null).collect(Collectors.toList());
         InvestStyle investStyle = investStyleRepository.findByName(investRequestModel.getInvestStyle());
         Long polishFundCashAmount = (investRequestModel.getCashAmount() * investStyle.getPolishFundPercent()) / 100;
         Long foreignFundCashAmount = (investRequestModel.getCashAmount() * investStyle.getForeignFundPercent()) / 100;
