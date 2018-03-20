@@ -37,17 +37,17 @@ public class ValidatorTests {
 
     @Test(expected = ExceptationFailed.class)
     public void validateSelectedFundsOfKindTestEmptyListExceptedException(){
-        investValidator.validateFundsOfKind(Collections.EMPTY_LIST, Fund.FundKind.FOREIGN.name());
+        investValidator.validateFundsOfKind(Collections.EMPTY_LIST, Fund.FundKind.FOREIGN);
     }
 
     @Test(expected = ExceptationFailed.class)
     public void validateSelectedFundsTestOfKindNullListExceptedException(){
-        investValidator.validateFundsOfKind(null, Fund.FundKind.FOREIGN.name());
+        investValidator.validateFundsOfKind(null, Fund.FundKind.FOREIGN);
     }
 
     @Test
     public void validateSelectedFundsOfKindTestList(){
-        investValidator.validateFundsOfKind(Arrays.asList(new Fund()), Fund.FundKind.FOREIGN.name());
+        investValidator.validateFundsOfKind(Arrays.asList(new Fund("test", Fund.FundKind.FOREIGN)), Fund.FundKind.FOREIGN);
     }
 
     @Test(expected = ExceptationFailed.class)

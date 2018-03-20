@@ -3,8 +3,8 @@ package pl.michol.invest.handler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.michol.invest.data.*;
-import pl.michol.invest.repository.InvestStyleRepository;
 import pl.michol.invest.repository.FundRepository;
+import pl.michol.invest.repository.InvestStyleRepository;
 import pl.michol.invest.validator.InvestValidator;
 
 import java.util.ArrayList;
@@ -27,12 +27,8 @@ public class InvestHandler implements Handler<InvestRequestModel, InvestResponse
 
     @Override
     public InvestResponseModel handle(InvestRequestModel investRequestModel) {
-        List<Fund> selectedFunds = investRequestModel.getFundIds().stream()
-                .map(fundRepository::findOne)
-                .collect(Collectors.toList());
-        investValidator.validateSelectedFunds(selectedFunds);
+        List<Fund> selectedFunds = investRequestModel.getFundIds().stream().map(fundRepository::findOne).collect(Collectors.toList());
         InvestStyle investStyle = investStyleRepository.findByName(investRequestModel.getInvestStyle());
-        investValidator.validateInvestStyle(investStyle);
         Long polishFundCashAmount = (investRequestModel.getCashAmount() * investStyle.getPolishFundPercent()) / 100;
         Long foreignFundCashAmount = (investRequestModel.getCashAmount() * investStyle.getForeignFundPercent()) / 100;
         Long cashFundCashAmount = (investRequestModel.getCashAmount() * investStyle.getCashFundPercent()) / 100;
@@ -47,7 +43,6 @@ public class InvestHandler implements Handler<InvestRequestModel, InvestResponse
 
     private List<SingleInvestRow> getFunds(Long allCashAmountWithoutNotAllocated, Long cashFundCashAmount, List<Fund> selectedFunds, Fund.FundKind fundKind) {
         List<Fund> funds = selectedFunds.stream().filter(e -> e.getKind().equals(fundKind)).collect(Collectors.toList());
-        investValidator.validateFundsOfKind(funds, fundKind.name());
         List<SingleInvestRow> singleInvestRows = new ArrayList<>();
         Long singleFundCashAmount = cashFundCashAmount / funds.size();
         Long validCashAmount = cashFundCashAmount - (singleFundCashAmount * funds.size());
