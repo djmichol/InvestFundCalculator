@@ -1,4 +1,4 @@
-package pl.michol.invest.data;
+package pl.michol.invest.data.http;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import pl.michol.invest.data.entity.InvestStyle;

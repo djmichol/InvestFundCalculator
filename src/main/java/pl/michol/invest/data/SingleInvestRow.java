@@ -1,5 +1,7 @@
 package pl.michol.invest.data;
 
+import pl.michol.invest.data.entity.Fund;
+
 public class SingleInvestRow {
 
     private Fund.FundKind fundKind;

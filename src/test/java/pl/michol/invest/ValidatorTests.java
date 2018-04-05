@@ -5,8 +5,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import pl.michol.invest.data.Fund;
-import pl.michol.invest.data.InvestStyle;
+import pl.michol.invest.data.entity.Fund;
+import pl.michol.invest.data.entity.InvestStyle;
 import pl.michol.invest.exception.ExceptationFailed;
 import pl.michol.invest.validator.InvestValidator;
 
@@ -37,17 +37,17 @@ public class ValidatorTests {
 
     @Test(expected = ExceptationFailed.class)
     public void validateSelectedFundsOfKindTestEmptyListExceptedException(){
-        investValidator.validateFundsOfKind(Collections.EMPTY_LIST, Fund.FundKind.FOREIGN);
+        investValidator.validateFundsOfKind(Collections.EMPTY_LIST, Fund.FundKind.FOREIGN.name());
     }
 
     @Test(expected = ExceptationFailed.class)
     public void validateSelectedFundsTestOfKindNullListExceptedException(){
-        investValidator.validateFundsOfKind(null, Fund.FundKind.FOREIGN);
+        investValidator.validateFundsOfKind(null, Fund.FundKind.FOREIGN.name());
     }
 
     @Test
     public void validateSelectedFundsOfKindTestList(){
-        investValidator.validateFundsOfKind(Arrays.asList(new Fund("test", Fund.FundKind.FOREIGN)), Fund.FundKind.FOREIGN);
+        investValidator.validateFundsOfKind(Arrays.asList(new Fund()), Fund.FundKind.FOREIGN.name());
     }
 
     @Test(expected = ExceptationFailed.class)

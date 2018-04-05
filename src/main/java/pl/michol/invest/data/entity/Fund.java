@@ -1,4 +1,4 @@
-package pl.michol.invest.data;
+package pl.michol.invest.data.entity;
 
 import javax.persistence.*;
 

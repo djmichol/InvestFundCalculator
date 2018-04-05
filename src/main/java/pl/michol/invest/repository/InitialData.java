@@ -2,8 +2,8 @@ package pl.michol.invest.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pl.michol.invest.data.Fund;
-import pl.michol.invest.data.InvestStyle;
+import pl.michol.invest.data.entity.Fund;
+import pl.michol.invest.data.entity.InvestStyle;
 
 import javax.annotation.PostConstruct;
 

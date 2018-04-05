@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.michol.invest.data.*;
+import pl.michol.invest.data.entity.Fund;
+import pl.michol.invest.data.entity.InvestStyle;
+import pl.michol.invest.data.http.InvestRequestModel;
+import pl.michol.invest.data.http.InvestResponseModel;
 import pl.michol.invest.handler.InvestHandler;
 
 import java.util.Arrays;
