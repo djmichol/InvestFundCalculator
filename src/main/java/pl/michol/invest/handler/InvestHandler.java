@@ -3,6 +3,7 @@ package pl.michol.invest.handler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.michol.invest.data.*;
+import pl.michol.invest.data.domain.MoneyDomain;
 import pl.michol.invest.data.entity.Fund;
 import pl.michol.invest.data.entity.InvestStyle;
 import pl.michol.invest.data.http.InvestRequestModel;
@@ -37,16 +38,13 @@ public class InvestHandler implements Handler<InvestRequestModel, InvestResponse
         investValidator.validateSelectedFunds(selectedFunds);
         InvestStyle investStyle = investStyleRepository.findByName(investRequestModel.getInvestStyle());
         investValidator.validateInvestStyle(investStyle);
-        Long polishFundCashAmount = (investRequestModel.getCashAmount() * investStyle.getPolishFundPercent()) / 100;
-        Long foreignFundCashAmount = (investRequestModel.getCashAmount() * investStyle.getForeignFundPercent()) / 100;
-        Long cashFundCashAmount = (investRequestModel.getCashAmount() * investStyle.getCashFundPercent()) / 100;
-        Long notAllocatedCashAmount = investRequestModel.getCashAmount() - polishFundCashAmount - foreignFundCashAmount - cashFundCashAmount;
-        List<SingleInvestRow> polishFunds = getFunds(investRequestModel.getCashAmount() - notAllocatedCashAmount, polishFundCashAmount, selectedFunds, Fund.FundKind.POLISH);
-        List<SingleInvestRow> foreignFunds = getFunds(investRequestModel.getCashAmount() - notAllocatedCashAmount, foreignFundCashAmount, selectedFunds, Fund.FundKind.FOREIGN);
-        List<SingleInvestRow> cashFunds = getFunds(investRequestModel.getCashAmount() - notAllocatedCashAmount, cashFundCashAmount, selectedFunds, Fund.FundKind.CASH);
+        MoneyDomain moneyDomain = new MoneyDomain(investRequestModel.getCashAmount(), investStyle);
+        List<SingleInvestRow> polishFunds = getFunds(moneyDomain.getAllCashWithoutNotAllocated(), moneyDomain.getPolishFundCashAmount(), selectedFunds, Fund.FundKind.POLISH);
+        List<SingleInvestRow> foreignFunds = getFunds(moneyDomain.getAllCashWithoutNotAllocated(), moneyDomain.getForeignFundCashAmount(), selectedFunds, Fund.FundKind.FOREIGN);
+        List<SingleInvestRow> cashFunds = getFunds(moneyDomain.getAllCashWithoutNotAllocated(), moneyDomain.getCashFundCashAmount(), selectedFunds, Fund.FundKind.CASH);
         polishFunds.addAll(foreignFunds);
         polishFunds.addAll(cashFunds);
-        return new InvestResponseModel(polishFunds, notAllocatedCashAmount);
+        return new InvestResponseModel(polishFunds, moneyDomain.getNotAllocatedCashAmount());
     }
 
     private List<SingleInvestRow> getFunds(Long allCashAmountWithoutNotAllocated, Long cashFundCashAmount, List<Fund> selectedFunds, Fund.FundKind fundKind) {
