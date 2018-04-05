@@ -28,25 +28,25 @@ public class InvestApplicationTests {
 
     @Test
     public void investHandlerTestNotAllocatedCashExceptedZero() {
-        InvestResponseModel investResponseModel = investHandler.handle(new InvestRequestModel(10000L, Arrays.asList(1L, 2L, 4L, 5L, 6L, 7L), InvestStyle.InvestStyleName.SAFE));
+        InvestResponseModel investResponseModel = investHandler.handle(new InvestRequestModel(10000L, Arrays.asList(1L, 2L, 4L, 5L, 6L, 7L), "SAFE"));
         Assert.assertEquals(0L, investResponseModel.getNotAllocatedCash().longValue());
     }
 
     @Test
     public void investHandlerTestNotAllocatedCashExceptedOne() {
-        InvestResponseModel investResponseModel = investHandler.handle(new InvestRequestModel(10001L, Arrays.asList(1L, 2L, 4L, 5L, 6L, 7L), InvestStyle.InvestStyleName.SAFE));
+        InvestResponseModel investResponseModel = investHandler.handle(new InvestRequestModel(10001L, Arrays.asList(1L, 2L, 4L, 5L, 6L, 7L), "SAFE"));
         Assert.assertEquals(1L, investResponseModel.getNotAllocatedCash().longValue());
     }
 
     @Test
     public void investHandlerTestFundSizeExceptedSix() {
-        InvestResponseModel investResponseModel = investHandler.handle(new InvestRequestModel(10001L, Arrays.asList(1L, 2L, 4L, 5L, 6L, 7L), InvestStyle.InvestStyleName.SAFE));
+        InvestResponseModel investResponseModel = investHandler.handle(new InvestRequestModel(10001L, Arrays.asList(1L, 2L, 4L, 5L, 6L, 7L), "SAFE"));
         Assert.assertEquals(6, investResponseModel.getInvestRows().size());
     }
 
     @Test
     public void investHandlerTestFundsAmountSumWithNotAllocated() {
-        InvestResponseModel investResponseModel = investHandler.handle(new InvestRequestModel(10001L, Arrays.asList(1L, 2L, 4L, 5L, 6L, 7L), InvestStyle.InvestStyleName.SAFE));
+        InvestResponseModel investResponseModel = investHandler.handle(new InvestRequestModel(10001L, Arrays.asList(1L, 2L, 4L, 5L, 6L, 7L), "SAFE"));
         Long amount = investResponseModel.getNotAllocatedCash() + investResponseModel.getInvestRows().stream()
                 .map(SingleInvestRow::getFundCashAmount).reduce((s1, s2) -> s1 + s2).orElse(0L);
         Assert.assertEquals(10001L, amount.longValue());
@@ -54,7 +54,7 @@ public class InvestApplicationTests {
 
     @Test
     public void investHandlerTestFundsAmountSumWithAllCashAllocated() {
-        InvestResponseModel investResponseModel = investHandler.handle(new InvestRequestModel(10000L, Arrays.asList(1L, 2L, 4L, 5L, 6L, 7L), InvestStyle.InvestStyleName.SAFE));
+        InvestResponseModel investResponseModel = investHandler.handle(new InvestRequestModel(10000L, Arrays.asList(1L, 2L, 4L, 5L, 6L, 7L), "SAFE"));
         Long amount = investResponseModel.getInvestRows().stream()
                 .map(SingleInvestRow::getFundCashAmount).reduce((s1, s2) -> s1 + s2).orElse(0L);
         Assert.assertEquals(10000L, amount.longValue());
@@ -62,7 +62,7 @@ public class InvestApplicationTests {
 
     @Test
     public void investHandlerTestFundsAmount() {
-        InvestResponseModel investResponseModel = investHandler.handle(new InvestRequestModel(10000L, Arrays.asList(1L, 2L, 4L, 5L, 6L, 7L), InvestStyle.InvestStyleName.SAFE));
+        InvestResponseModel investResponseModel = investHandler.handle(new InvestRequestModel(10000L, Arrays.asList(1L, 2L, 4L, 5L, 6L, 7L), "SAFE"));
         List<SingleInvestRow> sortedInvestRows = investResponseModel.getInvestRows().stream().sorted(Comparator.comparing(SingleInvestRow::getFundCashAmount)).collect(Collectors.toList());
         Assert.assertEquals(500L, sortedInvestRows.get(0).getFundCashAmount().longValue());
         Assert.assertEquals(1000L, sortedInvestRows.get(1).getFundCashAmount().longValue());
@@ -74,7 +74,7 @@ public class InvestApplicationTests {
 
     @Test
     public void investHandlerTestFundsPercent() {
-        InvestResponseModel investResponseModel = investHandler.handle(new InvestRequestModel(10000L, Arrays.asList(1L, 2L, 4L, 5L, 6L, 7L), InvestStyle.InvestStyleName.SAFE));
+        InvestResponseModel investResponseModel = investHandler.handle(new InvestRequestModel(10000L, Arrays.asList(1L, 2L, 4L, 5L, 6L, 7L), "SAFE"));
         List<SingleInvestRow> sortedInvestRows = investResponseModel.getInvestRows().stream().sorted(Comparator.comparing(SingleInvestRow::getFundCashAmount)).collect(Collectors.toList());
         Assert.assertEquals(5L, sortedInvestRows.get(0).getFoundCashPercent().longValue());
         Assert.assertEquals(10L, sortedInvestRows.get(1).getFoundCashPercent().longValue());
@@ -86,7 +86,7 @@ public class InvestApplicationTests {
 
     @Test
     public void investHandlerTestFundsKinds() {
-        InvestResponseModel investResponseModel = investHandler.handle(new InvestRequestModel(10000L, Arrays.asList(1L, 2L, 4L, 5L, 6L, 7L), InvestStyle.InvestStyleName.SAFE));
+        InvestResponseModel investResponseModel = investHandler.handle(new InvestRequestModel(10000L, Arrays.asList(1L, 2L, 4L, 5L, 6L, 7L), "SAFE"));
         List<SingleInvestRow> sortedInvestRows = investResponseModel.getInvestRows().stream().sorted(Comparator.comparing(SingleInvestRow::getFundCashAmount)).collect(Collectors.toList());
         Assert.assertEquals(Fund.FundKind.CASH, sortedInvestRows.get(0).getFundKind());
         Assert.assertEquals(Fund.FundKind.POLISH, sortedInvestRows.get(1).getFundKind());
@@ -98,7 +98,7 @@ public class InvestApplicationTests {
 
     @Test
     public void investHandlerTestFundsAmount2() {
-        InvestResponseModel investResponseModel = investHandler.handle(new InvestRequestModel(10000L, Arrays.asList(1L, 2L, 3L, 5L, 6L, 7L), InvestStyle.InvestStyleName.SAFE));
+        InvestResponseModel investResponseModel = investHandler.handle(new InvestRequestModel(10000L, Arrays.asList(1L, 2L, 3L, 5L, 6L, 7L), "SAFE"));
         List<SingleInvestRow> sortedInvestRows = investResponseModel.getInvestRows().stream().sorted(Comparator.comparing(SingleInvestRow::getFundCashAmount)).collect(Collectors.toList());
         Assert.assertEquals(500L, sortedInvestRows.get(0).getFundCashAmount().longValue());
         Assert.assertEquals(666L, sortedInvestRows.get(1).getFundCashAmount().longValue());
@@ -110,7 +110,7 @@ public class InvestApplicationTests {
 
     @Test
     public void investHandlerTestFundsPercent2() {
-        InvestResponseModel investResponseModel = investHandler.handle(new InvestRequestModel(10000L, Arrays.asList(1L, 2L, 3L, 5L, 6L, 7L), InvestStyle.InvestStyleName.SAFE));
+        InvestResponseModel investResponseModel = investHandler.handle(new InvestRequestModel(10000L, Arrays.asList(1L, 2L, 3L, 5L, 6L, 7L), "SAFE"));
         List<SingleInvestRow> sortedInvestRows = investResponseModel.getInvestRows().stream().sorted(Comparator.comparing(SingleInvestRow::getFundCashAmount)).collect(Collectors.toList());
         Assert.assertEquals(5D, sortedInvestRows.get(0).getFoundCashPercent(),0.01);
         Assert.assertEquals(6.66D, sortedInvestRows.get(1).getFoundCashPercent(),0.01);

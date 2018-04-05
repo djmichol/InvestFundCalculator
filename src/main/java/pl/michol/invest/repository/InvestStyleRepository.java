@@ -7,5 +7,5 @@ import pl.michol.invest.data.entity.InvestStyle;
 @Repository
 public interface InvestStyleRepository extends CrudRepository<InvestStyle, Long>{
 
-    InvestStyle findByName(InvestStyle.InvestStyleName name);
+    InvestStyle findByName(String name);
 }

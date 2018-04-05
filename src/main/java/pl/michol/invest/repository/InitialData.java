@@ -26,9 +26,9 @@ public class InitialData {
     }
 
     private void insertInitialInvestStyles() {
-        investStyleRepository.save(new InvestStyle(InvestStyle.InvestStyleName.SAFE, 20L, 75L, 5L));
-        investStyleRepository.save(new InvestStyle(InvestStyle.InvestStyleName.BALANCED, 30L, 60L, 10L));
-        investStyleRepository.save(new InvestStyle(InvestStyle.InvestStyleName.AGGRESSIVE, 40L, 20L, 40L));
+        investStyleRepository.save(new InvestStyle("SAFE", 20L, 75L, 5L));
+        investStyleRepository.save(new InvestStyle("BALANCED", 30L, 60L, 10L));
+        investStyleRepository.save(new InvestStyle("AGGRESSIVE", 40L, 20L, 40L));
     }
 
     private void insertInitialFunds() {

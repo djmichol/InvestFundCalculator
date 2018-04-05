@@ -4,7 +4,7 @@ import pl.michol.invest.data.entity.InvestStyle;
 
 public class InvestStyleHttpModel {
 
-    private InvestStyle.InvestStyleName name;
+    private String name;
     private Long polishFundPercent;
     private Long foreignFundPercent;
     private Long cashFundPercent;
@@ -12,18 +12,18 @@ public class InvestStyleHttpModel {
     public InvestStyleHttpModel() {
     }
 
-    public InvestStyleHttpModel(InvestStyle.InvestStyleName name, Long polishFundPercent, Long foreignFundPercent, Long cashFundPercent) {
+    public InvestStyleHttpModel(String name, Long polishFundPercent, Long foreignFundPercent, Long cashFundPercent) {
         this.name = name;
         this.polishFundPercent = polishFundPercent;
         this.foreignFundPercent = foreignFundPercent;
         this.cashFundPercent = cashFundPercent;
     }
 
-    public InvestStyle.InvestStyleName getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(InvestStyle.InvestStyleName name) {
+    public void setName(String name) {
         this.name = name;
     }
 

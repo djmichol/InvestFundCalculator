@@ -13,7 +13,7 @@ public class InvestRequestModel {
     @NotEmpty
     private List<Long> fundIds;
     @NotNull
-    private InvestStyle.InvestStyleName investStyle;
+    private String investStyle;
 
     public Long getCashAmount() {
         return cashAmount;
@@ -23,11 +23,11 @@ public class InvestRequestModel {
         this.cashAmount = cashAmount;
     }
 
-    public InvestStyle.InvestStyleName getInvestStyle() {
+    public String getInvestStyle() {
         return investStyle;
     }
 
-    public void setInvestStyle(InvestStyle.InvestStyleName investStyle) {
+    public void setInvestStyle(String investStyle) {
         this.investStyle = investStyle;
     }
 
@@ -42,7 +42,7 @@ public class InvestRequestModel {
     public InvestRequestModel() {
     }
 
-    public InvestRequestModel(Long cashAmount, List<Long> fundIds, InvestStyle.InvestStyleName investStyle) {
+    public InvestRequestModel(Long cashAmount, List<Long> fundIds, String investStyle) {
         this.cashAmount = cashAmount;
         this.fundIds = fundIds;
         this.investStyle = investStyle;

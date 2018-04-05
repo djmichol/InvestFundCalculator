@@ -8,36 +8,23 @@ public class InvestStyle {
     @Id
     @GeneratedValue
     private Long id;
-    @Enumerated(EnumType.STRING)
     @Column(unique = true)
-    private InvestStyleName name;
+    private String name;
     private Long polishFundPercent;
     private Long foreignFundPercent;
     private Long cashFundPercent;
 
-    public enum InvestStyleName {
-        SAFE("bezpieczny"),
-        BALANCED("zrownowazony"),
-        AGGRESSIVE("agresywny");
-
-        private String value;
-
-        InvestStyleName(String value) {
-            this.value = value;
-        }
-    }
-
     public InvestStyle() {
     }
 
-    public InvestStyle(InvestStyleName name, Long polishFundPercent, Long foreignFundPercent, Long cashFundPercent) {
+    public InvestStyle(String name, Long polishFundPercent, Long foreignFundPercent, Long cashFundPercent) {
         this.name = name;
         this.polishFundPercent = polishFundPercent;
         this.foreignFundPercent = foreignFundPercent;
         this.cashFundPercent = cashFundPercent;
     }
 
-    public InvestStyle(Long id, InvestStyleName name, Long polishFundPercent, Long foreignFundPercent, Long cashFundPercent) {
+    public InvestStyle(Long id, String name, Long polishFundPercent, Long foreignFundPercent, Long cashFundPercent) {
         this.id = id;
         this.name = name;
         this.polishFundPercent = polishFundPercent;
@@ -53,11 +40,11 @@ public class InvestStyle {
         this.id = id;
     }
 
-    public InvestStyleName getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(InvestStyleName name) {
+    public void setName(String name) {
         this.name = name;
     }
 
